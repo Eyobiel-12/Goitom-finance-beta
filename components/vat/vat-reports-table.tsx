@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { Eye, Trash2, FileText } from "lucide-react"
+import { Eye, Trash2, FileText, Download } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
@@ -50,6 +50,7 @@ export function VATReportsTable({ reports }: VATReportsTableProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [downloadingPdf, setDownloadingPdf] = useState<string | null>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -57,6 +58,161 @@ export function VATReportsTable({ reports }: VATReportsTableProps) {
     }, 200)
     return () => clearTimeout(timer)
   }, [])
+
+  const handleDownloadPDF = async (report: VATReport) => {
+    setDownloadingPdf(report.id)
+    
+    try {
+      // Create PDF with jsPDF
+      const { jsPDF } = await import('jspdf')
+      const doc = new jsPDF()
+      
+      // Set up fonts and colors
+      doc.setFont('helvetica')
+      
+      // Header with gradient background
+      doc.setFillColor(251, 146, 60) // Orange
+      doc.rect(0, 0, 210, 50, 'F')
+      
+      // Company logo placeholder
+      doc.setFillColor(255, 255, 255)
+      doc.circle(25, 25, 12, 'F')
+      doc.setTextColor(251, 146, 60)
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "bold")
+      doc.text("GF", 20, 28)
+      
+      // Company name
+      doc.setTextColor(255, 255, 255)
+      doc.setFontSize(20)
+      doc.setFont("helvetica", "bold")
+      doc.text("Goitom Finance BETA", 45, 20)
+      
+      // Report title
+      doc.setFontSize(24)
+      doc.setFont("helvetica", "bold")
+      doc.text("BTW RAPPORT", 150, 20)
+      
+      // Report period
+      doc.setFontSize(12)
+      doc.setFont("helvetica", "normal")
+      doc.text(`Periode: ${new Date(report.period_start).toLocaleDateString('nl-NL')} - ${new Date(report.period_end).toLocaleDateString('nl-NL')}`, 150, 28)
+      
+      // Status badge
+      doc.setFillColor(255, 255, 255)
+      doc.roundedRect(150, 32, 35, 8, 2, 2, 'F')
+      doc.setTextColor(251, 146, 60)
+      doc.setFontSize(8)
+      doc.setFont("helvetica", "bold")
+      doc.text(statusLabels[report.status as keyof typeof statusLabels]?.toUpperCase() || report.status.toUpperCase(), 152, 37)
+      
+      // Professional accent line
+      doc.setDrawColor(251, 146, 60)
+      doc.setLineWidth(2)
+      doc.line(20, 45, 190, 45)
+      
+      // Report details section
+      const detailsY = 70
+      
+      // Report details card
+      doc.setFillColor(248, 250, 252)
+      doc.roundedRect(15, detailsY - 5, 180, 60, 3, 3, 'F')
+      doc.setDrawColor(226, 232, 240)
+      doc.setLineWidth(0.5)
+      doc.roundedRect(15, detailsY - 5, 180, 60, 3, 3, 'S')
+      
+      // Report details header
+      doc.setFontSize(11)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(251, 146, 60)
+      doc.text("RAPPORTGEGEVENS", 20, detailsY + 2)
+      
+      // Report details
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(71, 85, 105)
+      
+      let detailY = detailsY + 8
+      doc.setFont("helvetica", "bold")
+      doc.text("Rapport periode:", 20, detailY)
+      doc.setFont("helvetica", "normal")
+      doc.text(`${new Date(report.period_start).toLocaleDateString('nl-NL')} - ${new Date(report.period_end).toLocaleDateString('nl-NL')}`, 20, detailY + 4)
+      detailY += 10
+      
+      doc.setFont("helvetica", "bold")
+      doc.text("Status:", 20, detailY)
+      doc.setFont("helvetica", "normal")
+      doc.text(statusLabels[report.status as keyof typeof statusLabels] || report.status, 20, detailY + 4)
+      detailY += 10
+      
+      doc.setFont("helvetica", "bold")
+      doc.text("Aangemaakt op:", 20, detailY)
+      doc.setFont("helvetica", "normal")
+      doc.text(new Date(report.created_at).toLocaleDateString('nl-NL'), 20, detailY + 4)
+      
+      // Financial summary section
+      const summaryY = 150
+      
+      // Financial summary card
+      doc.setFillColor(248, 250, 252)
+      doc.roundedRect(15, summaryY - 5, 180, 50, 3, 3, 'F')
+      doc.setDrawColor(226, 232, 240)
+      doc.setLineWidth(0.5)
+      doc.roundedRect(15, summaryY - 5, 180, 50, 3, 3, 'S')
+      
+      // Financial summary header
+      doc.setFontSize(11)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(251, 146, 60)
+      doc.text("FINANCIËLE SAMENVATTING", 20, summaryY + 2)
+      
+      // Financial details
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(71, 85, 105)
+      
+      let summaryDetailY = summaryY + 8
+      doc.setFont("helvetica", "bold")
+      doc.text("Totale verkoop:", 20, summaryDetailY)
+      doc.setFont("helvetica", "normal")
+      doc.text(`€${report.total_sales.toLocaleString('nl-NL', { minimumFractionDigits: 2 })}`, 120, summaryDetailY)
+      summaryDetailY += 6
+      
+      doc.setFont("helvetica", "bold")
+      doc.text("Totale BTW:", 20, summaryDetailY)
+      doc.setFont("helvetica", "normal")
+      doc.text(`€${report.total_vat.toLocaleString('nl-NL', { minimumFractionDigits: 2 })}`, 120, summaryDetailY)
+      summaryDetailY += 6
+      
+      // BTW percentage calculation
+      const vatPercentage = report.total_sales > 0 ? (report.total_vat / report.total_sales) * 100 : 0
+      doc.setFont("helvetica", "bold")
+      doc.text("BTW percentage:", 20, summaryDetailY)
+      doc.setFont("helvetica", "normal")
+      doc.text(`${vatPercentage.toFixed(1)}%`, 120, summaryDetailY)
+      
+      // Footer
+      const footerY = 250
+      doc.setFillColor(251, 146, 60)
+      doc.rect(0, footerY, 210, 20, 'F')
+      
+      doc.setFontSize(8)
+      doc.setTextColor(255, 255, 255)
+      doc.setFont("helvetica", "normal")
+      doc.text('Dit BTW rapport is gegenereerd door Goitom Finance Beta', 20, footerY + 8)
+      doc.text(`Gegenereerd op: ${new Date().toLocaleDateString('nl-NL')} om ${new Date().toLocaleTimeString('nl-NL')}`, 20, footerY + 12)
+      
+      // Save PDF
+      const fileName = `btw-rapport-${new Date(report.period_start).toLocaleDateString('nl-NL').replace(/\//g, '-')}-${new Date(report.period_end).toLocaleDateString('nl-NL').replace(/\//g, '-')}.pdf`
+      doc.save(fileName)
+      
+    } catch (error) {
+      console.error('Error generating VAT report PDF:', error)
+      alert('Er is een fout opgetreden bij het genereren van het BTW rapport PDF. Probeer het opnieuw.')
+    } finally {
+      setDownloadingPdf(null)
+    }
+  }
 
   const handleDelete = async () => {
     if (!deleteId) return
@@ -145,6 +301,19 @@ export function VATReportsTable({ reports }: VATReportsTableProps) {
                         <Eye className="h-4 w-4" />
                       </Button>
                     </Link>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleDownloadPDF(report)}
+                      disabled={downloadingPdf === report.id}
+                      className="hover:bg-green-50 hover:text-green-600"
+                    >
+                      {downloadingPdf === report.id ? (
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-green-600 border-t-transparent" />
+                      ) : (
+                        <Download className="h-4 w-4" />
+                      )}
+                    </Button>
                     <Button variant="ghost" size="icon" onClick={() => setDeleteId(report.id)}>
                       <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>

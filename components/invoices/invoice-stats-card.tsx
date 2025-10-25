@@ -9,17 +9,17 @@ interface InvoiceStatsCardProps {
   title: string
   value: string | number
   subtitle: string
-  iconName: "FileText" | "DollarSign" | "Clock" | "CheckCircle"
+  iconName: string
   growth: number
   gradient: string
   delay?: number
 }
 
-const iconMap = {
-  FileText,
-  DollarSign,
-  Clock,
-  CheckCircle
+const iconMap: Record<string, any> = {
+  FileText: FileText,
+  DollarSign: DollarSign,
+  Clock: Clock,
+  CheckCircle: CheckCircle
 }
 
 export function InvoiceStatsCard({
@@ -31,7 +31,7 @@ export function InvoiceStatsCard({
   gradient,
   delay = 0
 }: InvoiceStatsCardProps) {
-  const Icon = iconMap[iconName]
+  const Icon = iconMap[iconName] || FileText
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {

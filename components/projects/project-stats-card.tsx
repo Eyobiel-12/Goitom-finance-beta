@@ -9,17 +9,17 @@ interface ProjectStatsCardProps {
   title: string
   value: string | number
   subtitle: string
-  iconName: "FolderKanban" | "CheckCircle" | "Clock" | "DollarSign"
+  iconName: string
   growth: number
   gradient: string
   delay?: number
 }
 
-const iconMap = {
-  FolderKanban,
-  CheckCircle,
-  Clock,
-  DollarSign
+const iconMap: Record<string, any> = {
+  FolderKanban: FolderKanban,
+  CheckCircle: CheckCircle,
+  Clock: Clock,
+  DollarSign: DollarSign
 }
 
 export function ProjectStatsCard({
@@ -31,7 +31,7 @@ export function ProjectStatsCard({
   gradient,
   delay = 0
 }: ProjectStatsCardProps) {
-  const Icon = iconMap[iconName]
+  const Icon = iconMap[iconName] || FolderKanban
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {

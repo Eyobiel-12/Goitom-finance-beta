@@ -242,7 +242,7 @@ export function ProjectForm({ project, clients }: ProjectFormProps) {
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="budget" className="text-sm font-medium text-slate-700">Budget (ETB)</Label>
+                        <Label htmlFor="budget" className="text-sm font-medium text-slate-700">Budget (EUR)</Label>
                         <Input
                           id="budget"
                           name="budget"

@@ -139,18 +139,18 @@ export function VATReportForm() {
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Total Sales:</span>
                 <span className="font-semibold">
-                  {new Intl.NumberFormat("en-ET", {
+                  {new Intl.NumberFormat("nl-NL", {
                     style: "currency",
-                    currency: "ETB",
+                    currency: "EUR",
                   }).format(calculatedSales)}
                 </span>
               </div>
               <div className="flex justify-between border-t pt-3">
                 <span className="text-muted-foreground">Total VAT:</span>
                 <span className="font-semibold">
-                  {new Intl.NumberFormat("en-ET", {
+                  {new Intl.NumberFormat("nl-NL", {
                     style: "currency",
-                    currency: "ETB",
+                    currency: "EUR",
                   }).format(calculatedVAT)}
                 </span>
               </div>

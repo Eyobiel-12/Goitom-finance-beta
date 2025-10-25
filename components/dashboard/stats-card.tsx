@@ -9,17 +9,17 @@ interface DashboardStatsCardProps {
   title: string
   value: string | number
   subtitle: string
-  iconName: "Users" | "FolderKanban" | "FileText" | "Euro"
+  iconName: string
   growth: number
   gradient: string
   delay?: number
 }
 
-const iconMap = {
-  Users,
-  FolderKanban,
-  FileText,
-  Euro
+const iconMap: Record<string, any> = {
+  Users: Users,
+  FolderKanban: FolderKanban,
+  FileText: FileText,
+  Euro: Euro
 }
 
 export function DashboardStatsCard({
@@ -31,7 +31,7 @@ export function DashboardStatsCard({
   gradient,
   delay = 0
 }: DashboardStatsCardProps) {
-  const Icon = iconMap[iconName]
+  const Icon = iconMap[iconName] || Users
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {

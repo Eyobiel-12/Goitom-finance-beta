@@ -9,17 +9,17 @@ interface ClientStatsCardProps {
   title: string
   value: string | number
   subtitle: string
-  iconName: "Users" | "Building2" | "Globe" | "TrendingUp"
+  iconName: string
   growth: number
   gradient: string
   delay?: number
 }
 
-const iconMap = {
-  Users,
-  Building2,
-  Globe,
-  TrendingUp
+const iconMap: Record<string, any> = {
+  Users: Users,
+  Building2: Building2,
+  Globe: Globe,
+  TrendingUp: TrendingUp
 }
 
 export function ClientStatsCard({
@@ -31,7 +31,7 @@ export function ClientStatsCard({
   gradient,
   delay = 0
 }: ClientStatsCardProps) {
-  const Icon = iconMap[iconName]
+  const Icon = iconMap[iconName] || Users
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {

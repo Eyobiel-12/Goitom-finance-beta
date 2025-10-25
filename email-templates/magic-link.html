@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Link - Goitom Finance</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            padding: 32px 24px;
+            text-align: center;
+        }
+        .logo {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        .header h1 {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .content {
+            padding: 32px 24px;
+        }
+        .content h2 {
+            color: #1e293b;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 16px 0;
+        }
+        .content p {
+            margin: 0 0 16px 0;
+            font-size: 16px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 24px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(6, 182, 212, 0.3);
+        }
+        .footer {
+            background-color: #f8fafc;
+            padding: 24px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+        .footer p {
+            font-size: 14px;
+            color: #64748b;
+            margin: 0;
+        }
+        .beta-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .magic-link-box {
+            background-color: #ecfeff;
+            border: 1px solid #a5f3fc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .magic-link-box h3 {
+            margin: 0 0 16px 0;
+            color: #0e7490;
+            font-size: 18px;
+        }
+        .benefits {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">GF</div>
+            <h1>Goitom Finance<span class="beta-badge">BETA</span></h1>
+        </div>
+        
+        <div class="content">
+            <h2>✨ Magic Link Login</h2>
+            
+            <p>Je hebt een Magic Link aangevraagd om in te loggen op je Goitom Finance account. Dit is een veilige manier om toegang te krijgen zonder wachtwoord.</p>
+            
+            <div class="magic-link-box">
+                <h3>🎯 Klik om direct in te loggen</h3>
+                <p>Deze link geeft je direct toegang tot je account zonder wachtwoord in te voeren.</p>
+                
+                <a href="{{ .ConfirmationURL }}" class="cta-button">Inloggen met Magic Link</a>
+            </div>
+            
+            <div class="benefits">
+                <p><strong>🚀 Voordelen van Magic Link:</strong></p>
+                <ul>
+                    <li>✅ Geen wachtwoord nodig</li>
+                    <li>✅ Extra veilig</li>
+                    <li>✅ Werkt op alle apparaten</li>
+                    <li>✅ Automatische login</li>
+                </ul>
+            </div>
+            
+            <p><strong>Belangrijke informatie:</strong></p>
+            <ul>
+                <li>Deze link is 1 uur geldig</li>
+                <li>Na gebruik wordt de link automatisch ongeldig</li>
+                <li>Deel deze link nooit met anderen</li>
+                <li>Als je deze link niet hebt aangevraagd, negeer deze email</li>
+            </ul>
+            
+            <p>Met vriendelijke groet,<br>
+            Het Goitom Finance Team</p>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Goitom Finance Beta. Alle rechten voorbehouden.</p>
+            <p>Professionele financiële diensten voor Nederlandse ondernemers</p>
+        </div>
+    </div>
+</body>
+</html>

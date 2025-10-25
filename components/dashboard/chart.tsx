@@ -21,9 +21,9 @@ export function DashboardChart() {
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-              Revenue Trend
+              Omzet Trend
             </CardTitle>
-            <p className="text-slate-600 mt-1">Monthly performance overview</p>
+            <p className="text-slate-600 mt-1">Maandelijkse prestatie overzicht</p>
           </div>
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 shadow-lg">
             <BarChart3 className="h-5 w-5 text-white" />
@@ -69,8 +69,8 @@ export function DashboardChart() {
                 }}
                 labelStyle={{ color: '#475569', fontWeight: '600' }}
                 formatter={(value: any, name: string) => [
-                  name === 'revenue' ? `€${value.toLocaleString()}` : value,
-                  name === 'revenue' ? 'Revenue' : 'Invoices'
+                  name === 'revenue' ? `€${value.toLocaleString('nl-NL')}` : value,
+                  name === 'revenue' ? 'Omzet' : 'Facturen'
                 ]}
               />
               <Area
@@ -91,19 +91,19 @@ export function DashboardChart() {
           <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/50">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="h-4 w-4 text-emerald-600" />
-              <span className="text-sm font-medium text-emerald-700">Revenue Growth</span>
+              <span className="text-sm font-medium text-emerald-700">Omzet Groei</span>
             </div>
             <div className="text-2xl font-bold text-emerald-900">+23.7%</div>
-            <div className="text-xs text-emerald-600">vs last month</div>
+            <div className="text-xs text-emerald-600">vs vorige maand</div>
           </div>
           
           <div className="p-4 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200/50">
             <div className="flex items-center gap-2 mb-2">
               <BarChart3 className="h-4 w-4 text-blue-600" />
-              <span className="text-sm font-medium text-blue-700">Invoice Count</span>
+              <span className="text-sm font-medium text-blue-700">Factuur Aantal</span>
             </div>
             <div className="text-2xl font-bold text-blue-900">+15.3%</div>
-            <div className="text-xs text-blue-600">vs last month</div>
+            <div className="text-xs text-blue-600">vs vorige maand</div>
           </div>
         </div>
       </CardContent>

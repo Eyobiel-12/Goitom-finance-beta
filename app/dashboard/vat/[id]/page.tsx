@@ -73,9 +73,9 @@ export default async function VATReportViewPage({ params }: { params: Promise<{ 
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {new Intl.NumberFormat("en-ET", {
+              {new Intl.NumberFormat("nl-NL", {
                 style: "currency",
-                currency: "ETB",
+                currency: "EUR",
               }).format(report.total_sales)}
             </div>
           </CardContent>
@@ -87,9 +87,9 @@ export default async function VATReportViewPage({ params }: { params: Promise<{ 
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {new Intl.NumberFormat("en-ET", {
+              {new Intl.NumberFormat("nl-NL", {
                 style: "currency",
-                currency: "ETB",
+                currency: "EUR",
               }).format(report.total_vat)}
             </div>
           </CardContent>
@@ -124,21 +124,21 @@ export default async function VATReportViewPage({ params }: { params: Promise<{ 
                         {new Date(invoice.issue_date).toLocaleDateString()}
                       </TableCell>
                       <TableCell className="text-right">
-                        {new Intl.NumberFormat("en-ET", {
+                        {new Intl.NumberFormat("nl-NL", {
                           style: "currency",
-                          currency: "ETB",
+                          currency: "EUR",
                         }).format(invoice.subtotal)}
                       </TableCell>
                       <TableCell className="text-right">
-                        {new Intl.NumberFormat("en-ET", {
+                        {new Intl.NumberFormat("nl-NL", {
                           style: "currency",
-                          currency: "ETB",
+                          currency: "EUR",
                         }).format(invoice.tax_amount)}
                       </TableCell>
                       <TableCell className="text-right font-semibold">
-                        {new Intl.NumberFormat("en-ET", {
+                        {new Intl.NumberFormat("nl-NL", {
                           style: "currency",
-                          currency: "ETB",
+                          currency: "EUR",
                         }).format(invoice.total)}
                       </TableCell>
                     </TableRow>

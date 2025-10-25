@@ -181,9 +181,9 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                     {project.budget ? (
                       <div className="flex items-center gap-2 text-sm text-slate-600 group-hover:text-slate-700 transition-colors">
                         <DollarSign className="h-3 w-3 text-green-500" />
-                        <span>{new Intl.NumberFormat("en-ET", {
+                        <span>{new Intl.NumberFormat("nl-NL", {
                           style: "currency",
-                          currency: "ETB",
+                          currency: "EUR",
                         }).format(project.budget)}</span>
                       </div>
                     ) : (
