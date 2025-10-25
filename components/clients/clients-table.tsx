@@ -7,6 +7,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { useState, useEffect } from "react"
+import { cn } from "@/lib/utils"
 import { toast } from "sonner"
 import {
   AlertDialog,
