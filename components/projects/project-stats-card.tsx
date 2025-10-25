@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { FolderKanban, TrendingUp, CheckCircle, Clock, DollarSign } from "lucide-react"
+import { FolderKanban, TrendingUp, CheckCircle, Clock, DollarSign, HelpCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
 
@@ -22,6 +22,8 @@ const iconMap: Record<string, any> = {
   DollarSign: DollarSign
 }
 
+const DefaultIcon = HelpCircle
+
 export function ProjectStatsCard({
   title,
   value,
@@ -31,7 +33,7 @@ export function ProjectStatsCard({
   gradient,
   delay = 0
 }: ProjectStatsCardProps) {
-  const Icon = iconMap[iconName] || FolderKanban
+  const Icon = iconMap[iconName] || DefaultIcon
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {

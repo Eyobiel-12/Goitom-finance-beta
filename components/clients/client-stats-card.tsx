@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { Users, TrendingUp, Building2, Globe } from "lucide-react"
+import { Users, TrendingUp, Building2, Globe, HelpCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
 
@@ -22,6 +22,8 @@ const iconMap: Record<string, any> = {
   TrendingUp: TrendingUp
 }
 
+const DefaultIcon = HelpCircle
+
 export function ClientStatsCard({
   title,
   value,
@@ -31,7 +33,7 @@ export function ClientStatsCard({
   gradient,
   delay = 0
 }: ClientStatsCardProps) {
-  const Icon = iconMap[iconName] || Users
+  const Icon = iconMap[iconName] || DefaultIcon
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {

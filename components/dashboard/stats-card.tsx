@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { TrendingUp, Users, FolderKanban, FileText, Euro } from "lucide-react"
+import { TrendingUp, Users, FolderKanban, FileText, Euro, HelpCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
 
@@ -22,6 +22,8 @@ const iconMap: Record<string, any> = {
   Euro: Euro
 }
 
+const DefaultIcon = HelpCircle
+
 export function DashboardStatsCard({
   title,
   value,
@@ -31,7 +33,7 @@ export function DashboardStatsCard({
   gradient,
   delay = 0
 }: DashboardStatsCardProps) {
-  const Icon = iconMap[iconName] || Users
+  const Icon = iconMap[iconName] || DefaultIcon
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
