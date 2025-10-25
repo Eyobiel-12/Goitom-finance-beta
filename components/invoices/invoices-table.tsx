@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
+import { toast } from "sonner"
 import { generateInvoicePDF } from '@/lib/utils/pdf-generator'
 import {
   AlertDialog,
@@ -176,7 +177,7 @@ export function InvoicesTable({ invoices }: InvoicesTableProps) {
         }
       }
       
-      alert(errorMessage)
+             toast.error(errorMessage)
     } finally {
       setDownloadingPdf(null)
     }
@@ -190,12 +191,13 @@ export function InvoicesTable({ invoices }: InvoicesTableProps) {
 
     const { error } = await supabase.from("invoices").delete().eq("id", deleteId)
 
-    if (error) {
-      console.error("[v0] Error deleting invoice:", error)
-      alert("Failed to delete invoice")
-    } else {
-      router.refresh()
-    }
+      if (error) {
+        console.error("[v0] Error deleting invoice:", error)
+        toast.error("Verwijderen van factuur mislukt")
+      } else {
+        toast.success("Factuur succesvol verwijderd")
+        router.refresh()
+      }
 
     setIsDeleting(false)
     setDeleteId(null)

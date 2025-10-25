@@ -8,7 +8,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { useState, useEffect } from "react"
-import { cn } from "@/lib/utils"
+import { toast } from "sonner"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -69,12 +69,13 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
 
     const { error } = await supabase.from("projects").delete().eq("id", deleteId)
 
-    if (error) {
-      console.error("[v0] Error deleting project:", error)
-      alert("Failed to delete project")
-    } else {
-      router.refresh()
-    }
+      if (error) {
+        console.error("[v0] Error deleting project:", error)
+        toast.error("Verwijderen van project mislukt")
+      } else {
+        toast.success("Project succesvol verwijderd")
+        router.refresh()
+      }
 
     setIsDeleting(false)
     setDeleteId(null)

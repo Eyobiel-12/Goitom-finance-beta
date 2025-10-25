@@ -7,7 +7,7 @@ import { Eye, Trash2, FileText, Download } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
-import { useState, useEffect } from "react"
+import { toast } from "sonner"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -208,7 +208,7 @@ export function VATReportsTable({ reports }: VATReportsTableProps) {
       
     } catch (error) {
       console.error('Error generating VAT report PDF:', error)
-      alert('Er is een fout opgetreden bij het genereren van het BTW rapport PDF. Probeer het opnieuw.')
+      toast.error('Er is een fout opgetreden bij het genereren van het BTW rapport PDF. Probeer het opnieuw.')
     } finally {
       setDownloadingPdf(null)
     }
@@ -222,12 +222,13 @@ export function VATReportsTable({ reports }: VATReportsTableProps) {
 
     const { error } = await supabase.from("vat_reports").delete().eq("id", deleteId)
 
-    if (error) {
-      console.error("[v0] Error deleting VAT report:", error)
-      alert("Failed to delete VAT report")
-    } else {
-      router.refresh()
-    }
+      if (error) {
+        console.error("[v0] Error deleting VAT report:", error)
+        toast.error("Verwijderen van BTW rapport mislukt")
+      } else {
+        toast.success("BTW rapport succesvol verwijderd")
+        router.refresh()
+      }
 
     setIsDeleting(false)
     setDeleteId(null)

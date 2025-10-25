@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Download, Mail, Settings } from "lucide-react"
 import { generateInvoicePDF } from "@/lib/utils/pdf-generator"
 import { useState } from "react"
+import { toast } from "sonner"
 import { PDFStyleSelector } from "./pdf-style-selector"
 
 interface InvoiceActionsProps {
@@ -22,7 +23,7 @@ export function InvoiceActions({ invoice, items, organization }: InvoiceActionsP
       await generateInvoicePDF(invoice, items, organization, style, colorScheme)
     } catch (error) {
       console.error("[v0] Error generating PDF:", error)
-      alert("Er is een fout opgetreden bij het genereren van de PDF. Probeer het opnieuw.")
+      toast.error("Er is een fout opgetreden bij het genereren van de PDF. Probeer het opnieuw.")
     } finally {
       setIsGenerating(false)
       setShowStyleSelector(false)

@@ -7,7 +7,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { useState, useEffect } from "react"
-import { cn } from "@/lib/utils"
+import { toast } from "sonner"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -54,12 +54,13 @@ export function ClientsTable({ clients }: ClientsTableProps) {
 
     const { error } = await supabase.from("clients").delete().eq("id", deleteId)
 
-    if (error) {
-      console.error("[v0] Error deleting client:", error)
-      alert("Failed to delete client")
-    } else {
-      router.refresh()
-    }
+      if (error) {
+        console.error("[v0] Error deleting client:", error)
+        toast.error("Verwijderen van klant mislukt")
+      } else {
+        toast.success("Klant succesvol verwijderd")
+        router.refresh()
+      }
 
     setIsDeleting(false)
     setDeleteId(null)
