@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "sonner"
 import { MessageSquare, Star, Bug, Lightbulb } from "lucide-react"
+import { createClient } from "@/lib/supabase/client"
 
 interface FeedbackModalProps {
   open: boolean
@@ -30,15 +31,31 @@ export function FeedbackModal({ open, onOpenChange }: FeedbackModalProps) {
     setIsSubmitting(true)
 
     try {
-      // In a real app, you would send this to your backend/feedback service
-      // For now, we'll just simulate it
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const supabase = createClient()
+      
+      // Get current user
+      const { data: { user }, error: userError } = await supabase.auth.getUser()
+      
+      if (userError || !user) {
+        toast.error("Je moet ingelogd zijn om feedback te verzenden")
+        return
+      }
+
+      // Insert feedback into database
+      const { error } = await supabase.from("feedback").insert({
+        user_id: user.id,
+        type: type,
+        message: feedback.trim()
+      })
+
+      if (error) throw error
       
       toast.success("Bedankt voor je feedback! We waarderen je input.")
       setFeedback("")
       setType("general")
       onOpenChange(false)
     } catch (error) {
+      console.error("Error submitting feedback:", error)
       toast.error("Er is een fout opgetreden bij het verzenden van je feedback")
     } finally {
       setIsSubmitting(false)
