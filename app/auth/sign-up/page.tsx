@@ -28,13 +28,13 @@ export default function SignUpPage() {
     setError(null)
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match")
+      setError("Wachtwoorden komen niet overeen")
       setIsLoading(false)
       return
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters")
+      setError("Wachtwoord moet minimaal 6 tekens lang zijn")
       setIsLoading(false)
       return
     }
@@ -83,20 +83,20 @@ export default function SignUpPage() {
         </div>
         <Card className="border-border/50 shadow-xl">
           <CardHeader className="space-y-2 pb-6">
-            <CardTitle className="text-2xl font-semibold tracking-tight">Create your account</CardTitle>
-            <CardDescription className="text-base">Get started with your free account today</CardDescription>
+            <CardTitle className="text-2xl font-semibold tracking-tight">Maak je account aan</CardTitle>
+            <CardDescription className="text-base">Start vandaag nog met je gratis account</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSignUp}>
               <div className="flex flex-col gap-5">
                 <div className="grid gap-2.5">
                   <Label htmlFor="fullName" className="text-sm font-medium">
-                    Full Name
+                    Volledige Naam
                   </Label>
                   <Input
                     id="fullName"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Jan Janssen"
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
@@ -119,7 +119,7 @@ export default function SignUpPage() {
                 </div>
                 <div className="grid gap-2.5">
                   <Label htmlFor="password" className="text-sm font-medium">
-                    Password
+                    Wachtwoord
                   </Label>
                   <Input
                     id="password"
@@ -132,7 +132,7 @@ export default function SignUpPage() {
                 </div>
                 <div className="grid gap-2.5">
                   <Label htmlFor="confirmPassword" className="text-sm font-medium">
-                    Confirm Password
+                    Bevestig Wachtwoord
                   </Label>
                   <Input
                     id="confirmPassword"
@@ -149,16 +149,16 @@ export default function SignUpPage() {
                   </div>
                 )}
                 <Button type="submit" className="w-full h-11 shadow-sm" disabled={isLoading}>
-                  {isLoading ? "Creating account..." : "Create account"}
+                  {isLoading ? "Account aanmaken..." : "Account aanmaken"}
                 </Button>
               </div>
               <div className="mt-8 text-center text-sm text-muted-foreground">
-                Already have an account?{" "}
+                Heb je al een account?{" "}
                 <Link
                   href="/auth/login"
                   className="font-medium text-foreground underline underline-offset-4 hover:text-primary transition-colors"
                 >
-                  Sign in
+                  Inloggen
                 </Link>
               </div>
             </form>
