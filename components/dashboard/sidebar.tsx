@@ -4,8 +4,9 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { LayoutDashboard, Users, FolderKanban, FileText, BarChart3, Settings, Menu, X, ChevronLeft, ChevronRight } from "lucide-react"
+import { LayoutDashboard, Users, FolderKanban, FileText, BarChart3, Settings, Menu, X, ChevronLeft, ChevronRight, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { FeedbackModal } from "@/components/dashboard/feedback-modal"
 import { useState, useEffect } from "react"
 
 const navigation = [
@@ -22,6 +23,7 @@ export function DashboardSidebar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [showFeedback, setShowFeedback] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -144,8 +146,26 @@ export function DashboardSidebar() {
               )
             })}
           </nav>
+          
+          {/* Beta Feedback Button */}
+          <div className={cn("border-t border-slate-200/50 p-3", isCollapsed && "px-1")}>
+            <Button
+              onClick={() => setShowFeedback(true)}
+              className={cn(
+                "w-full gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-lg",
+                isCollapsed ? "h-10 w-10 p-0 justify-center" : "justify-start"
+              )}
+              variant="ghost"
+            >
+              <MessageSquare className="h-4 w-4" />
+              {!isCollapsed && <span className="text-sm font-medium">Beta Feedback</span>}
+            </Button>
+          </div>
         </div>
       </aside>
+
+      {/* Feedback Modal */}
+      <FeedbackModal open={showFeedback} onOpenChange={setShowFeedback} />
     </>
   )
 }

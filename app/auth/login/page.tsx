@@ -64,8 +64,8 @@ export default function LoginPage() {
         </div>
         <Card className="border-border/50 shadow-xl">
           <CardHeader className="space-y-2 pb-6">
-            <CardTitle className="text-2xl font-semibold tracking-tight">Welcome back</CardTitle>
-            <CardDescription className="text-base">Sign in to your account to continue</CardDescription>
+            <CardTitle className="text-2xl font-semibold tracking-tight">Welkom terug</CardTitle>
+            <CardDescription className="text-base">Log in op je account om door te gaan</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin}>
@@ -85,9 +85,17 @@ export default function LoginPage() {
                   />
                 </div>
                 <div className="grid gap-2.5">
-                  <Label htmlFor="password" className="text-sm font-medium">
-                    Password
-                  </Label>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password" className="text-sm font-medium">
+                      Wachtwoord
+                    </Label>
+                    <Link
+                      href="/auth/forgot-password"
+                      className="text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80 transition-colors"
+                    >
+                      Wachtwoord vergeten?
+                    </Link>
+                  </div>
                   <Input
                     id="password"
                     type="password"
@@ -103,16 +111,16 @@ export default function LoginPage() {
                   </div>
                 )}
                 <Button type="submit" className="w-full h-11 shadow-sm" disabled={isLoading}>
-                  {isLoading ? "Signing in..." : "Sign in"}
+                  {isLoading ? "Inloggen..." : "Inloggen"}
                 </Button>
               </div>
               <div className="mt-8 text-center text-sm text-muted-foreground">
-                Don&apos;t have an account?{" "}
+                Nog geen account?{" "}
                 <Link
                   href="/auth/sign-up"
                   className="font-medium text-foreground underline underline-offset-4 hover:text-primary transition-colors"
                 >
-                  Create account
+                  Account aanmaken
                 </Link>
               </div>
             </form>
